@@ -19,6 +19,7 @@ package org.apache.el.parser;
 /**
  * @author Jacob Hookom [jacob@hookom.net]
  */
+// 使用到了访问者模式
 public interface NodeVisitor {
     public void visit(Node node) throws Exception;
 }

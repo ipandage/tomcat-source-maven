@@ -30,6 +30,7 @@ import java.io.Serializable;
  * @author Costin Manolache
  * @author Remy Maucherat
  */
+ // 操作字符块，操作字符块的精简方法 todo gxg 效率如何提高？
 public final class CharChunk implements Cloneable, Serializable, CharSequence {
 
     private static final long serialVersionUID = 1L;

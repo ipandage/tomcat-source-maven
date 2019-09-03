@@ -161,12 +161,14 @@ public abstract class AbstractEndpoint<S> {
 
     /**
      * Running state of the endpoint.
+	 * endpoint 运行状态 默认 false,  startInternal 时设置为true
      */
     protected volatile boolean running = false;
 
 
     /**
      * Will be set to true whenever the endpoint is paused.
+	 * 当endpoint 被阻止时设置为true ，AbstractEndpoint#pause()
      */
     protected volatile boolean paused = false;
 
@@ -766,6 +768,7 @@ public abstract class AbstractEndpoint<S> {
         startInternal();
     }
 
+    // 启动接收器线程
     protected final void startAcceptorThreads() {
         int count = getAcceptorThreadCount();
         acceptors = new Acceptor[count];
@@ -790,6 +793,7 @@ public abstract class AbstractEndpoint<S> {
 
     /**
      * Pause the endpoint, which will stop it accepting new connections.
+	 * 暂停 endpoint， 将停止接收新的连接
      */
     public void pause() {
         if (running && !paused) {

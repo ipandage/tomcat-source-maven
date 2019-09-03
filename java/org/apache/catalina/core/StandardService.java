@@ -81,6 +81,7 @@ public class StandardService extends LifecycleMBeanBase implements Service {
     /**
      * The set of Connectors associated with this Service.
      */
+    // 一个 service 多个 Connector
     protected Connector connectors[] = new Connector[0];
     private final Object connectorsLock = new Object();
 
@@ -452,6 +453,8 @@ public class StandardService extends LifecycleMBeanBase implements Service {
 
         // Start our defined Connectors second
         synchronized (connectorsLock) {
+//			0 = {Connector@1308} "Connector[HTTP/1.1-8080]"
+//			1 = {Connector@1374} "Connector[AJP/1.3-8009]"
             for (Connector connector: connectors) {
                 try {
                     // If it has already failed, don't try and start it
@@ -563,6 +566,8 @@ public class StandardService extends LifecycleMBeanBase implements Service {
 
         // Initialize our defined Connectors
         synchronized (connectorsLock) {
+//			0 = {Connector@1810} "Connector[HTTP/1.1-8080]"
+//			1 = {Connector@1891} "Connector[AJP/1.3-8009]"
             for (Connector connector : connectors) {
                 try {
                     connector.init();

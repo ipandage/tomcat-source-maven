@@ -750,6 +750,7 @@ public final class Mapper {
 
         // Context mapping
         ContextList contextList = mappedHost.contextList;
+
         MappedContext[] contexts = contextList.contexts;
         int pos = find(contexts, uri);
         if (pos == -1) {

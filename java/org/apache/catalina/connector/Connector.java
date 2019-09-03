@@ -63,6 +63,7 @@ public class Connector extends LifecycleMBeanBase  {
     }
 
     public Connector(String protocol) {
+    	// 设置协议
         setProtocol(protocol);
         // Instantiate protocol handler
         ProtocolHandler p = null;
@@ -576,6 +577,7 @@ public class Connector extends LifecycleMBeanBase  {
             }
         } else {
             if ("HTTP/1.1".equals(protocol)) {
+            	// 默认使用 Http11NioProtocol
                 setProtocolHandlerClassName
                     ("org.apache.coyote.http11.Http11NioProtocol");
             } else if ("AJP/1.3".equals(protocol)) {
@@ -983,6 +985,7 @@ public class Connector extends LifecycleMBeanBase  {
         setState(LifecycleState.STARTING);
 
         try {
+        	// Http11NioProtocol Connector 构造函数中指定协议
             protocolHandler.start();
         } catch (Exception e) {
             String errPrefix = "";

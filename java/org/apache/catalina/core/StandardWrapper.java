@@ -864,6 +864,7 @@ public class StandardWrapper extends ContainerBase
                 if (!newInstance) {
                     countAllocated.incrementAndGet();
                 }
+                // 来自 WebXml
                 return instance;
             }
         }

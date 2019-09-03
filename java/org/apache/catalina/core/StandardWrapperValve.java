@@ -130,6 +130,7 @@ final class StandardWrapperValve
         }
 
         // Allocate a servlet instance to process this request
+		// 为请求分配一个servlet实例
         try {
             if (!unavailable) {
                 servlet = wrapper.allocate();
@@ -178,6 +179,7 @@ final class StandardWrapperValve
         request.setAttribute(Globals.DISPATCHER_REQUEST_PATH_ATTR,
                 requestPathMB);
         // Create the filter chain for this request
+		// 为请求创建过滤器链
         ApplicationFilterChain filterChain =
                 ApplicationFilterFactory.createFilterChain(request, wrapper, servlet);
 

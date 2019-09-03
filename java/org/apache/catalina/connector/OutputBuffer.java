@@ -276,6 +276,7 @@ public class OutputBuffer extends Writer
         // If there are chars, flush all of them to the byte buffer now as bytes are used to
         // calculate the content-length (if everything fits into the byte buffer, of course).
         if (cb.getLength() > 0) {
+        	// 刷新数据的地方
             cb.flushBuffer();
         }
 

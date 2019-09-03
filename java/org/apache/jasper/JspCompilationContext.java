@@ -83,6 +83,7 @@ public class JspCompilationContext {
     private volatile boolean removed = false;
 
     private URLClassLoader jspLoader;
+    // createOutputDir 中初始化 work目录设置位置 StandardContext#postWorkDirectory
     private URL baseUrl;
     private Class<?> servletClass;
 
@@ -173,6 +174,7 @@ public class JspCompilationContext {
     }
 
     public ClassLoader getJspLoader() {
+    	// 每个jsp文件 对应一个jsploader
         if( jspLoader == null ) {
             jspLoader = new JasperLoader
                     (new URL[] {baseUrl},
@@ -575,11 +577,13 @@ public class JspCompilationContext {
 
     public void compile() throws JasperException, FileNotFoundException {
         createCompiler();
+        // 检查是否需要编译,如果已经编译过不需重新编译
         if (jspCompiler.isOutDated()) {
             if (isRemoved()) {
                 throw new FileNotFoundException(jspUri);
             }
             try {
+            	// 删除生成的java和class文件 并且重新编译
                 jspCompiler.removeGeneratedFiles();
                 jspLoader = null;
                 jspCompiler.compile();
@@ -670,7 +674,10 @@ public class JspCompilationContext {
         // Append servlet or tag handler path to scratch dir
         try {
             File base = options.getScratchDir();
+            // /Users/72cy-0101-01-0009/Documents/git_workspace/me/tomcat-source-maven/work/Catalina/localhost/ROOT
+			// work 路径 设置位置 StandardContext#postWorkDirectory
             baseUrl = base.toURI().toURL();
+
             outputDir = base.getAbsolutePath() + File.separator + path +
                     File.separator;
             if (!makeOutputDir()) {

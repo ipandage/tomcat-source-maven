@@ -53,6 +53,7 @@ class JspReader {
 
     /**
      * The current spot in the file.
+	 * 在文件中的当前位置
      */
     private Mark current;
 
@@ -147,10 +148,12 @@ class JspReader {
      *
      * @return True if more reading is possible
      */
+    // 是否到达文件末尾
     boolean hasMoreInput() {
         return current.cursor < current.stream.length;
     }
 
+    // 获取下一字符
     int nextChar() {
         if (!hasMoreInput())
             return -1;
@@ -236,6 +239,7 @@ class JspReader {
         current.col--;
     }
 
+    // 获取某个范围字符组成的字符串
     String getText(Mark start, Mark stop) {
         Mark oldstart = mark();
         reset(start);
@@ -305,6 +309,7 @@ class JspReader {
      *         in stream is positioned after the search string, <strong>
      *               false</strong> otherwise, position in stream unchanged.
      */
+    // 匹配是否包含某个字符串
     boolean matches(String string) {
        int len = string.length();
        int cursor = current.cursor;
@@ -387,6 +392,7 @@ class JspReader {
         return result;
     }
 
+    // 跳过空格符
     int skipSpaces() {
         int i = 0;
         while (hasMoreInput() && isSpace()) {
@@ -405,6 +411,7 @@ class JspReader {
      *         before the search string) if found, <strong>null</strong>
      *         otherwise.
      */
+    // 跳转到某个字符串
     Mark skipUntil(String limit) {
         Mark ret = mark();
         int limlen = limit.length();

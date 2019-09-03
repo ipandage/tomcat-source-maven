@@ -482,7 +482,7 @@ public class CoyoteAdapter implements Adapter {
     public void service(org.apache.coyote.Request req,
                         org.apache.coyote.Response res)
         throws Exception {
-
+		// 转换 Request Response 对象
         Request request = (Request) req.getNote(ADAPTER_NOTES);
         Response response = (Response) res.getNote(ADAPTER_NOTES);
 

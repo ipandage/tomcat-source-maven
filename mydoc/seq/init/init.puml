@@ -1,0 +1,20 @@
+@startuml
+
+Bootstrap -> Bootstrap :start()
+ Bootstrap -> Catalina :start()
+ Catalina -> LifecycleBase :start()
+ LifecycleBase -> StandardServer :startInternal()
+ StandardServer -> LifecycleBase :start()
+ LifecycleBase -> StandardService :startInternal()
+ StandardService -> LifecycleBase :start()
+ LifecycleBase -> StandardEngine :startInternal()
+ StandardEngine -> ContainerBase :startInternal()
+ ContainerBase -> ContainerBase.StartChild :call()
+ ContainerBase.StartChild -> ContainerBase.StartChild :call()
+ ContainerBase.StartChild -> LifecycleBase :start()
+ LifecycleBase -> StandardHost :startInternal()
+ StandardHost -> ContainerBase :startInternal()
+ ContainerBase -> LifecycleBase :start()
+ LifecycleBase -> StandardPipeline :startInternal()
+
+@enduml

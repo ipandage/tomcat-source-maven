@@ -64,6 +64,7 @@ public final class JspRuntimeContext {
 
     /*
      * Counts how many times the webapp's JSPs have been reloaded.
+     * 记录jsp 被reload多少次
      */
     private final AtomicInteger jspReloadCount = new AtomicInteger(0);
 

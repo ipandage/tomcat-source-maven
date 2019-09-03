@@ -1,0 +1,14 @@
+@startuml
+
+group 添加事件到events
+ NioEndpoint.Acceptor -> NioEndpoint :setSocketOptions()
+ NioEndpoint -> NioEndpoint.Poller :register()
+ NioEndpoint.Poller -> NioEndpoint.Poller :addEvent()
+end
+
+group 处理events事件
+ NioEndpoint.Poller -> NioEndpoint.Poller :run()
+ NioEndpoint.Poller -> NioEndpoint.Poller :events()
+end
+
+@enduml

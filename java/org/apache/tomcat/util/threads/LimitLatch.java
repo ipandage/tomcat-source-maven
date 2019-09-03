@@ -28,6 +28,7 @@ import org.apache.juli.logging.LogFactory;
  * after which all subsequent requests to acquire the latch will be placed in a
  * FIFO queue until one of the shares is returned.
  */
+// 连接数控制器
 public class LimitLatch {
 
     private static final Log log = LogFactory.getLog(LimitLatch.class);

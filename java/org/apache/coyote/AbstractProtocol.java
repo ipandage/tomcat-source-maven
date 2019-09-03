@@ -602,7 +602,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
                 // Nothing to do. Socket has been closed.
                 return SocketState.CLOSED;
             }
-
+			// 通过socket查找处理器
             Processor<S> processor = connections.get(socket);
             if (status == SocketStatus.DISCONNECT && processor == null) {
                 // Nothing to do. Endpoint requested a close and there is no

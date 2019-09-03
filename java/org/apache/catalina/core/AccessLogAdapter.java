@@ -27,6 +27,7 @@ import org.apache.catalina.connector.Response;
  */
 public class AccessLogAdapter implements AccessLog {
 
+	// AccessLogValve
     private AccessLog[] logs;
 
     public AccessLogAdapter(AccessLog log) {

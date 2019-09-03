@@ -86,6 +86,7 @@ public abstract class LifecycleBase implements Lifecycle {
      * @param type  Event type
      * @param data  Data associated with event.
      */
+    // 触发生命周期事件
     protected void fireLifecycleEvent(String type, Object data) {
         lifecycle.fireLifecycleEvent(type, data);
     }

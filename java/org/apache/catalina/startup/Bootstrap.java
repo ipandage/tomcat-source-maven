@@ -132,7 +132,6 @@ public final class Bootstrap {
      */
     private Object catalinaDaemon = null;
 
-
     ClassLoader commonLoader = null;
     ClassLoader catalinaLoader = null;
     ClassLoader sharedLoader = null;
@@ -157,7 +156,12 @@ public final class Bootstrap {
         }
     }
 
-
+	/**
+	 * 创建类加载器
+	 *
+	 * @param name 类名称
+	 * @param parent 父类加载器
+	 */
     private ClassLoader createClassLoader(String name, ClassLoader parent)
         throws Exception {
 
@@ -253,8 +257,10 @@ public final class Bootstrap {
      */
     public void init() throws Exception {
 
+    	// 初始化类加载器
         initClassLoaders();
 
+        // 为当前线程设置类加载器
         Thread.currentThread().setContextClassLoader(catalinaLoader);
 
         SecurityClassLoad.securityClassLoad(catalinaLoader);

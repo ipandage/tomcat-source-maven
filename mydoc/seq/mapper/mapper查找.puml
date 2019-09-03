@@ -1,0 +1,13 @@
+@startuml
+
+ TaskThread.WrappingRunnable -> NioEndpoint.SocketProcessor :run()
+ NioEndpoint.SocketProcessor -> NioEndpoint.SocketProcessor :doRun()
+ NioEndpoint.SocketProcessor -> AbstractProtocol.AbstractConnectionHandler :process()
+ AbstractProtocol.AbstractConnectionHandler -> AbstractHttp11Processor :process()
+ AbstractHttp11Processor -> CoyoteAdapter :service()
+ CoyoteAdapter -> CoyoteAdapter :postParseRequest()
+ CoyoteAdapter -> Mapper :map()
+ Mapper -> Mapper :internalMap()
+ Mapper -> Mapper :find()
+
+@enduml

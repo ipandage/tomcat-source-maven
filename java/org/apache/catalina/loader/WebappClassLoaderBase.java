@@ -1476,6 +1476,7 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
 
         state = LifecycleState.STARTING_PREP;
 
+		// 加载 class 和 lib
         WebResource classes = resources.getResource("/WEB-INF/classes");
         if (classes.isDirectory() && classes.canRead()) {
             localRepositories.add(classes.getURL());
@@ -1497,6 +1498,8 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
         } catch (SecurityException e) {
             return;
         }
+
+        // 如果是 EBCDIC（扩增二进式十进交换码） 需要转码
         if (encoding.indexOf("EBCDIC")!=-1) {
             needConvert = true;
         }

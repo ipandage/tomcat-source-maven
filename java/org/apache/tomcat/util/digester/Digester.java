@@ -254,6 +254,7 @@ public class Digester extends DefaultHandler2 {
      * Do we want to use the Context ClassLoader when loading classes
      * for instantiating new objects.  Default is <code>false</code>.
      */
+    // 是否使用容器加载器 实例化对象 默认false ， DigesterFactory#newDigester 中设置为true
     protected boolean useContextClassLoader = false;
 
 
@@ -331,6 +332,7 @@ public class Digester extends DefaultHandler2 {
         if (this.useContextClassLoader) {
             ClassLoader classLoader =
                     Thread.currentThread().getContextClassLoader();
+			// log.info("Thread.currentThread() name " + Thread.currentThread().getName() + " classLoader is " + classLoader.toString());
             if (classLoader != null) {
                 return (classLoader);
             }

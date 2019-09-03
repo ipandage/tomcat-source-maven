@@ -1,0 +1,38 @@
+@startuml
+
+interface Server
+interface LifecycleListener
+
+interface Service
+class Connector
+interface NamingResources
+interface Executor1
+interface Executor2
+interface ProtocolHandler
+abstract class AbstractEndpoint
+class Acceptor
+
+interface Processor
+interface Adapter
+
+class Mapper
+
+Server "1" *-- "*" Service : use
+Server "1" *-- "*" LifecycleListener : use
+Server "1" *-- "*" NamingResources : use
+Service "1" *-- "*" Connector : use
+Service "1" *-- "1" Executor1 : use
+Service "1" *-- "1" Mapper : use
+
+Connector "1" *-- "1" ProtocolHandler : use
+ProtocolHandler "1" *-- "1" AbstractEndpoint : use
+ProtocolHandler "1" *-- "1" Processor : use
+Processor "1" *-- "1" Adapter : use
+
+AbstractEndpoint "1" *-- "1" Acceptor : use
+Acceptor "1" *-- "1" Connector : use
+AbstractEndpoint "1" *-- "1" Executor2 : use
+
+Connector "1" *-- "1" Service : use
+
+@enduml

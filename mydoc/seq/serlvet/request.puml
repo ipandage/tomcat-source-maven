@@ -1,0 +1,24 @@
+@startuml
+
+ TaskThread.WrappingRunnable -> NioEndpoint.SocketProcessor :run()
+ NioEndpoint.SocketProcessor -> NioEndpoint.SocketProcessor :doRun()
+ NioEndpoint.SocketProcessor -> AbstractProtocol.AbstractConnectionHandler :process()
+ AbstractProtocol.AbstractConnectionHandler -> AbstractHttp11Processor :process()
+ AbstractHttp11Processor -> CoyoteAdapter :service()
+ CoyoteAdapter -> StandardEngineValve :invoke()
+ StandardEngineValve -> AbstractAccessLogValve :invoke()
+ AbstractAccessLogValve -> ErrorReportValve :invoke()
+ ErrorReportValve -> StandardHostValve :invoke()
+ StandardHostValve -> AuthenticatorBase :invoke()
+ AuthenticatorBase -> StandardContextValve :invoke()
+ StandardContextValve -> StandardWrapperValve :invoke()
+ StandardWrapperValve -> ApplicationFilterChain :doFilter()
+ ApplicationFilterChain -> ApplicationFilterChain :internalDoFilter()
+ ApplicationFilterChain -> SetCharacterEncodingFilter :doFilter()
+ SetCharacterEncodingFilter -> ApplicationFilterChain :doFilter()
+ ApplicationFilterChain -> ApplicationFilterChain :internalDoFilter()
+ ApplicationFilterChain -> HttpServlet :service()
+ HttpServlet -> HttpServlet :service()
+ HttpServlet -> HelloWorldExample:doGet()
+
+@enduml

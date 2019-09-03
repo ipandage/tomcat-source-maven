@@ -348,11 +348,13 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
         serverSock = ServerSocketChannel.open();
         socketProperties.setProperties(serverSock.socket());
         InetSocketAddress addr = (getAddress()!=null?new InetSocketAddress(getAddress(),getPort()):new InetSocketAddress(getPort()));
+        // 绑定端口
         serverSock.socket().bind(addr,getBacklog());
         serverSock.configureBlocking(true); //mimic APR behavior
         serverSock.socket().setSoTimeout(getSocketProperties().getSoTimeout());
 
         // Initialize thread count defaults for acceptor, poller
+		// 初始化默认的 接收器 轮训器 线程数量, 接收器 为1 ，轮训器 默认2
         if (acceptorThreadCount == 0) {
             // FIXME: Doesn't seem to work that well with multiple accept threads
             acceptorThreadCount = 1;
@@ -535,12 +537,14 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
     /**
      * Process the specified connection.
      */
+    // 处理指定的连接
     protected boolean setSocketOptions(SocketChannel socket) {
         // Process the connection
         try {
             //disable blocking, APR style, we are gonna be polling it
             socket.configureBlocking(false);
             Socket sock = socket.socket();
+
             socketProperties.setProperties(sock);
 
             NioChannel channel = nioChannels.pop();
@@ -668,6 +672,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             while (running) {
 
                 // Loop if endpoint is paused
+				// 如果 endpoint 暂停,循环这段逻辑
                 while (paused && running) {
                     state = AcceptorState.PAUSED;
                     try {
@@ -677,19 +682,23 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                     }
                 }
 
+                //  没有运行直接break
                 if (!running) {
                     break;
                 }
+                // AcceptorState 状态变更为运行中
                 state = AcceptorState.RUNNING;
 
                 try {
                     //if we have reached max connections, wait
-                    countUpOrAwaitConnection();
+					// 达到最大连接数 等待  maxConnections 默认 10000
+					countUpOrAwaitConnection();
 
                     SocketChannel socket = null;
                     try {
                         // Accept the next incoming connection from the server
                         // socket
+						// 调用jdk方法 接受新连接
                         socket = serverSock.accept();
                     } catch (IOException ioe) {
                         //we didn't get a socket
@@ -792,8 +801,10 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
 
         @Override
         public void run() {
+			log.info("interestOps " + interestOps);
             if ( interestOps == OP_REGISTER ) {
                 try {
+                	// 注册读事件
                     socket.getIOChannel().register(socket.getPoller().getSelector(), SelectionKey.OP_READ, key);
                 } catch (Exception x) {
                     log.error("", x);
@@ -878,6 +889,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             selector.wakeup();
         }
 
+        // 添加事件
         private void addEvent(PollerEvent event) {
             events.offer(event);
             if ( wakeupCounter.incrementAndGet() == 0 ) selector.wakeup();
@@ -912,6 +924,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
          * @return <code>true</code> if some events were processed,
          *   <code>false</code> if queue was empty
          */
+        // 处理 Poller 中的事件队列，如果有事件被处理返回true
         public boolean events() {
             boolean result = false;
 
@@ -946,8 +959,10 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             ka.setSecure(isSSLEnabled());
             PollerEvent r = eventCache.pop();
             ka.interestOps(SelectionKey.OP_READ);//this is what OP_REGISTER turns into.
-            if ( r==null) r = new PollerEvent(socket,ka,OP_REGISTER);
-            else r.reset(socket,ka,OP_REGISTER);
+            if (r==null)
+            	r = new PollerEvent(socket,ka,OP_REGISTER);
+            else
+            	r.reset(socket,ka,OP_REGISTER);
             addEvent(r);
         }
 
@@ -1127,6 +1142,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                                 unreg(sk, attachment, sk.readyOps());
                                 boolean closeSocket = false;
                                 // Read goes before write
+								// 处理读写事件
                                 if (sk.isReadable()) {
                                     if (!processSocket(attachment, SocketStatus.OPEN_READ, true)) {
                                         closeSocket = true;

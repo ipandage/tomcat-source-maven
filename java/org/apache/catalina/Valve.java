@@ -42,6 +42,7 @@ import org.apache.catalina.connector.Response;
  * @author Gunnar Rjnning
  * @author Peter Donald
  */
+// 阀门
 public interface Valve {
 
 

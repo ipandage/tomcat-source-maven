@@ -33,6 +33,7 @@ import org.apache.jasper.Constants;
  * @author Anil K. Vijendran
  * @author Harish Prabandham
  */
+// 加载Servlet类文件
 public class JasperLoader extends URLClassLoader {
 
     private final PermissionCollection permissionCollection;

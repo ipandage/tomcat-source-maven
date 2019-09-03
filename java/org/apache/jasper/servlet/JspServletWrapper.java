@@ -95,6 +95,7 @@ public class JspServletWrapper {
     private int tripCount;
     private JasperException compileException;
     /** Timestamp of last time servlet resource was modified */
+    // servlet 类最后修改时间
     private volatile long servletClassLastModifiedTime;
     private long lastModificationTest = 0L;
     private long lastUsageTime = System.currentTimeMillis();

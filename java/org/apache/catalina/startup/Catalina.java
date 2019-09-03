@@ -153,6 +153,7 @@ public class Catalina {
      *
      * @param parentClassLoader The shared extensions class loader.
      */
+    // parentClassLoader URLClassPath
     public void setParentClassLoader(ClassLoader parentClassLoader) {
         this.parentClassLoader = parentClassLoader;
     }
@@ -484,6 +485,7 @@ public class Catalina {
         initNaming();
 
         // Create and execute our Digester
+		// 初始化  Digester 解析 xml
         Digester digester = createStartDigester();
 
         InputSource inputSource = null;
@@ -491,6 +493,7 @@ public class Catalina {
         File file = null;
         try {
             try {
+            	// 读取 conf/server.xml
                 file = configFile();
                 inputStream = new FileInputStream(file);
                 inputSource = new InputSource(file.toURI().toURL().toString());
@@ -731,7 +734,6 @@ public class Catalina {
              + " { -help | start | stop }");
 
     }
-
 
     protected void initDirs() {
         String temp = System.getProperty("java.io.tmpdir");

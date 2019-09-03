@@ -89,7 +89,13 @@ public final class LifecycleSupport {
      * @param type Event type
      * @param data Event data
      */
-    public void fireLifecycleEvent(String type, Object data) {
+//    0 = {NamingContextListener@1829}
+//1 = {VersionLoggerListener@1962}
+//2 = {AprLifecycleListener@1963}
+//3 = {JreMemoryLeakPreventionListener@1964}
+//4 = {GlobalResourcesLifecycleListener@1965}
+//5 = {ThreadLocalLeakPreventionListener@1966}
+	public void fireLifecycleEvent(String type, Object data) {
         LifecycleEvent event = new LifecycleEvent(lifecycle, type, data);
         for (LifecycleListener listener : listeners) {
             listener.lifecycleEvent(event);
