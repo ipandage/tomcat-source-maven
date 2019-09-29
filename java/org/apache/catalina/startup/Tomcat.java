@@ -661,7 +661,7 @@ public class Tomcat {
     }
 
     static final String[] silences = new String[] {
-        "org.apache.coyote.http11.Http11Protocol",
+        "org.apache.coyote.http11.Http11ProtocolHttp11Protocol",
         "org.apache.catalina.core.StandardService",
         "org.apache.catalina.core.StandardEngine",
         "org.apache.catalina.startup.ContextConfig",

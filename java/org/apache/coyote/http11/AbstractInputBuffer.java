@@ -114,18 +114,21 @@ public abstract class AbstractInputBuffer<S> implements InputBuffer{
 
     /**
      * Pointer to the current read buffer.
+	 * 当前缓冲的字节数组，默认值 8*1024 todo gxg
      */
     protected byte[] buf;
 
 
     /**
      * Last valid byte.
+	 * 从操作系统底层读取数据填充到buf最后的位置
      */
     protected int lastValid;
 
 
     /**
      * Position in the buffer.
+	 * 读取指针
      */
     protected int pos;
 
@@ -133,6 +136,7 @@ public abstract class AbstractInputBuffer<S> implements InputBuffer{
     /**
      * Pos of the end of the header in the buffer, which is also the
      * start of the body.
+	 * http请求报文头部结束的位置，也是报文体的开始位置
      */
     protected int end;
 

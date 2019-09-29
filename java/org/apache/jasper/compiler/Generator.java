@@ -3625,6 +3625,7 @@ class Generator {
         if (gen.isPoolingEnabled) {
             gen.compileTagHandlerPoolList(page);
         }
+        // 生成头文件注释
         gen.generateCommentHeader();
         if (gen.ctxt.isTagFile()) {
             JasperTagInfo tagInfo = (JasperTagInfo) gen.ctxt.getTagInfo();

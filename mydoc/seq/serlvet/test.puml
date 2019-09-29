@@ -1,0 +1,15 @@
+@startuml
+Bootstrap -> Bootstrap :load()
+ Bootstrap -> Catalina :load()
+ Catalina -> LifecycleBase :init()
+ LifecycleBase -> StandardServer :initInternal()
+ StandardServer -> LifecycleBase :init()
+ LifecycleBase -> StandardService :initInternal()
+ StandardService -> LifecycleBase :init()
+ LifecycleBase -> Connector :initInternal()
+ Connector -> AbstractHttp11JsseProtocol :init()
+ AbstractHttp11JsseProtocol -> AbstractProtocol :init()
+ AbstractProtocol -> AbstractEndpoint :init()
+ AbstractEndpoint -> JIoEndpoint :bind()
+ JIoEndpoint -> AbstractEndpoint :setMaxConnections()
+@enduml

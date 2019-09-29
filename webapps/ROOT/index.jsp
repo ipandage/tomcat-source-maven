@@ -77,7 +77,7 @@ request.setAttribute("tomcatExamplesUrl", "/examples/");
                 <br class="separator" />
             </div>
             <div id="middle" class="curved container">
-                <h3>Developer Quick Start</h3>
+                <h3>Developer Quick Start5</h3>
                 <div class="col25">
                     <div class="container">
                         <p><a href="${tomcatDocUrl}setup.html">Tomcat Setup</a></p>

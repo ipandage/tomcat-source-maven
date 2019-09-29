@@ -41,7 +41,21 @@ public class LimitLatch {
 
         @Override
         protected int tryAcquireShared(int ignored) {
-            long newCount = count.incrementAndGet();
+        	int queueLength = this.getQueueLength();
+			System.out.println("---------------------------- bbb");
+
+			// queueLength 为什么一直为1 ？
+
+			System.out.println("queueLength is " + queueLength);
+			Collection<Thread> queuedThreads = this.getQueuedThreads();
+			for (Thread queuedThread : queuedThreads) {
+				boolean queued = this.isQueued(queuedThread);
+				System.out.println(queuedThread.getName() + " " + queuedThread.getState().name() + " " + queued);
+			}
+
+			System.out.println("---------------------------- eee");
+
+			long newCount = count.incrementAndGet();
             if (!released && newCount > limit) {
                 // Limit exceeded
                 count.decrementAndGet();
@@ -58,7 +72,7 @@ public class LimitLatch {
         }
     }
 
-    private final Sync sync;
+    private final Sync sync; // AQS 实现
     private final AtomicLong count;
     private volatile long limit;
     private volatile boolean released = false;
@@ -109,6 +123,7 @@ public class LimitLatch {
      * Acquires a shared latch if one is available or waits for one if no shared
      * latch is current available.
      */
+    // 如果共享锁可用，则获取共享锁，如果当前没有可用的共享锁，则等待一个共享锁
     public void countUpOrAwait() throws InterruptedException {
         if (log.isDebugEnabled()) {
             log.debug("Counting up["+Thread.currentThread().getName()+"] latch="+getCount());
@@ -120,6 +135,7 @@ public class LimitLatch {
      * Releases a shared latch, making it available for another thread to use.
      * @return the previous counter value
      */
+    // 释放共享锁，供其他线程使用
     public long countDown() {
         sync.releaseShared(0);
         long result = getCount();

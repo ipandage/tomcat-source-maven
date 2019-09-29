@@ -851,6 +851,7 @@ public abstract class AbstractEndpoint<S> {
     }
 
     protected void countUpOrAwaitConnection() throws InterruptedException {
+		System.out.println("maxConnections is " + maxConnections);
         if (maxConnections==-1) return;
         LimitLatch latch = connectionLimitLatch;
         if (latch!=null) latch.countUpOrAwait();
@@ -861,6 +862,7 @@ public abstract class AbstractEndpoint<S> {
         LimitLatch latch = connectionLimitLatch;
         if (latch!=null) {
             long result = latch.countDown();
+			System.out.println("countDownConnection result is " + result);
             if (result<0) {
                 getLog().warn("Incorrect connection count, multiple socket.close called on the same socket." );
             }
